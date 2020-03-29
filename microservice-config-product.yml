@@ -1,0 +1,161 @@
+﻿#注意：如果在记事本上编写，下面的缩进不要使用Tab来缩进，不然报错
+spring:
+  profiles:
+    active: dev # 激活开发环境配置
+---
+server:
+  port: 8001
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml 
+  type-aliases-package: com.mengxuegu.springcloud.entities
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+spring:
+  profiles: dev8001 # 开发环境
+  application:
+    name: microservice-product-config			# ******服务名*******
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springcloud_db01?serverTimezone=GMT%2B8 #数据库连接地址，*****注意库名 db01***************
+    username: root
+    password: 123456
+    dbcp2:
+      min-idle: 5
+      initial-size: 5
+      max-total: 5
+      max-wait-millis: 150
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka6001.com:6001/eureka,http://eureka6002.com:6002/eureka
+  instance:
+    instanceId: ${spring.application.name}:${server.port}
+    prefer-ip-address: true 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest # 暴露触发消息总线的地址
+# 在被监控服务上添加暴露端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh  # hystrix.stream，
+---
+server:
+  port: 8002
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml 
+  type-aliases-package: com.mengxuegu.springcloud.entities
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+spring:
+  profiles: dev8002 # 开发环境
+  application:
+    name: microservice-product-config			# ******服务名*******
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springcloud_db02?serverTimezone=GMT%2B8 #数据库连接地址，*****注意库名 db01***************
+    username: root
+    password: 123456
+    dbcp2:
+      min-idle: 5
+      initial-size: 5
+      max-total: 5
+      max-wait-millis: 150
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka6001.com:6001/eureka,http://eureka6002.com:6002/eureka
+  instance:
+    instanceId: ${spring.application.name}:${server.port}
+    prefer-ip-address: true 
+# 在被监控服务上添加暴露端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+---
+server:
+  port: 8001
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml 
+  type-aliases-package: com.mengxuegu.springcloud.entities
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+spring:
+  profiles: prod8001 # 生产环境
+  application:
+    name: microservice-product-config			# ******服务名*******
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springcloud_db01?serverTimezone=GMT%2B8 #数据库连接地址，*****注意库名 db02***************
+    username: root
+    password: 123456
+    dbcp2:
+      min-idle: 5
+      initial-size: 5
+      max-total: 5
+      max-wait-millis: 150
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka6001.com:6001/eureka,http://eureka6002.com:6002/eureka
+  instance:
+    instanceId: ${spring.application.name}:${server.port}
+    prefer-ip-address: true 
+# 在被监控服务上添加暴露端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+---
+server:
+  port: 8002
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml 
+  type-aliases-package: com.mengxuegu.springcloud.entities
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+spring:
+  profiles: prod8002 # 生产环境
+  application:
+    name: microservice-product-config			# ******服务名*******
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springcloud_db02?serverTimezone=GMT%2B8 #数据库连接地址，*****注意库名 db02***************
+    username: root
+    password: 123456
+    dbcp2:
+      min-idle: 5
+      initial-size: 5
+      max-total: 5
+      max-wait-millis: 150
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka6001.com:6001/eureka,http://eureka6002.com:6002/eureka
+  instance:
+    instanceId: ${spring.application.name}:${server.port}
+    prefer-ip-address: true 
+# 在被监控服务上添加暴露端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
